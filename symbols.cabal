@@ -3,8 +3,8 @@
 
 name:                symbols
 version:             0.1.0.0
-synopsis:             Symbol manipulation
--- description:
+synopsis:            Symbol manipulation
+description:         Utilities for manipulating type-level strings natively.
 license:             BSD3
 license-file:        LICENSE
 author:              Csongor Kiss
@@ -13,6 +13,7 @@ maintainer:          kiss.csongor.kiss@gmail.com
 category:            Dependent Types
 build-type:          Simple
 extra-source-files:  CHANGELOG.md
+                   , README.md
 cabal-version:       >=1.10
 
 library
@@ -21,6 +22,6 @@ library
                      , Data.Symbol.Examples.Printf
   -- other-modules:
   -- other-extensions:
-  build-depends:       base >=4.11 && <4.12
+  build-depends:       base >=4.10 && <= 5.0
   hs-source-dirs:      src
   default-language:    Haskell2010
