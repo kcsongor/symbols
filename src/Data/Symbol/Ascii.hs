@@ -4,6 +4,11 @@
 {-# LANGUAGE KindSignatures #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE DataKinds #-}
+{-# LANGUAGE CPP #-}
+
+#if __GLASGOW_HASKELL__ >= 806
+{-# LANGUAGE NoStarIsType #-}
+#endif
 
 module Data.Symbol.Ascii
   (
@@ -133,7 +138,7 @@ type family ReadNat (sym :: Symbol) :: Nat where
 
 type family ReadNat1 (sym :: [Symbol]) (n :: Nat) :: Nat where
   ReadNat1 '[] acc = acc
-  ReadNat1 (x ': xs) acc = ReadNat1 xs (acc * 10 + ReadDigit x)
+  ReadNat1 (x ': xs) acc = ReadNat1 xs (10 * acc + ReadDigit x)
 
 type family ReadDigit (sym :: Symbol) :: Nat where
   ReadDigit "0" = 0
