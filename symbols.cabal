@@ -16,6 +16,10 @@ extra-source-files:  CHANGELOG.md
                    , README.md
 cabal-version:       >=1.10
 
+source-repository head
+  type: git
+  location: https://github.com/kcsongor/symbols
+
 library
   exposed-modules:     Data.Symbol.Ascii
                      , Data.Symbol.Utils
