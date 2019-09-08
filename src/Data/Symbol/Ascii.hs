@@ -158,7 +158,7 @@ type family ReadDigit (orig :: Symbol) (sym :: Symbol) :: Nat where
   ReadDigit orig other =
     TypeError ('Text "Parse error: "
                ':<>: ShowType other
-               ':<>: 'Text " is not a valid in "
+               ':<>: 'Text " is not a valid digit in "
                ':<>: ShowType orig)
 
 --------------------------------------------------------------------------------
