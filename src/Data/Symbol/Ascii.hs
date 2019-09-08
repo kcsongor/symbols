@@ -50,7 +50,7 @@ type family Lookup (x :: Symbol) (prefix :: Symbol) (xs :: LookupTable) :: Symbo
 type family Lookup2 ol or x prefix cl l r :: Symbol where
   Lookup2 EQ _ _ _ cl _ _     = cl
   Lookup2 LT GT _ _ cl _ r    = cl
-  Lookup2 LT _ _ _ cl _ Leaf  = cl -- for the last character (~)
+  Lookup2 LT _ _ _ cl _ Leaf  = TypeError ('Text "Non-ASCII character!")
   Lookup2 LT _ x prefix _ _ r = Lookup x prefix r
   Lookup2 GT _ x prefix _ l _ = Lookup x prefix l
 
@@ -261,4 +261,4 @@ type Chars
              ('Node
                  ('Node ('Node 'Leaf '("z", "{") 'Leaf) '("{", "|") 'Leaf)
                  '("|", "}")
-                 ('Node ('Node 'Leaf '("}", "~") 'Leaf) '("~", "~") 'Leaf)))))
+                 ('Node ('Node 'Leaf '("}", "~") 'Leaf) '("~", "\DEL") 'Leaf)))))
