@@ -134,23 +134,32 @@ type family ToLowerC (sym :: Symbol) :: Symbol where
 --------------------------------------------------------------------------------
 -- | Parse a natural number
 type family ReadNat (sym :: Symbol) :: Nat where
-  ReadNat sym = ReadNat1 (ToList sym) 0
+  ReadNat sym = ReadNat1 sym (ToList sym)
 
-type family ReadNat1 (sym :: [Symbol]) (n :: Nat) :: Nat where
-  ReadNat1 '[] acc = acc
-  ReadNat1 (x ': xs) acc = ReadNat1 xs (10 * acc + ReadDigit x)
+type family ReadNat1 (orig :: Symbol) (sym :: [Symbol]) :: Nat where
+  ReadNat1 _ '[] = TypeError ('Text "Parse error: empty string")
+  ReadNat1 orig xs  = ReadNat2 orig xs 0
 
-type family ReadDigit (sym :: Symbol) :: Nat where
-  ReadDigit "0" = 0
-  ReadDigit "1" = 1
-  ReadDigit "2" = 2
-  ReadDigit "3" = 3
-  ReadDigit "4" = 4
-  ReadDigit "5" = 5
-  ReadDigit "6" = 6
-  ReadDigit "7" = 7
-  ReadDigit "8" = 8
-  ReadDigit "9" = 9
+type family ReadNat2 (orgin :: Symbol) (sym :: [Symbol]) (n :: Nat) :: Nat where
+  ReadNat2 orig '[] acc = acc
+  ReadNat2 orig (x ': xs) acc = ReadNat2 orig xs (10 * acc + ReadDigit orig x)
+
+type family ReadDigit (orig :: Symbol) (sym :: Symbol) :: Nat where
+  ReadDigit _ "0" = 0
+  ReadDigit _ "1" = 1
+  ReadDigit _ "2" = 2
+  ReadDigit _ "3" = 3
+  ReadDigit _ "4" = 4
+  ReadDigit _ "5" = 5
+  ReadDigit _ "6" = 6
+  ReadDigit _ "7" = 7
+  ReadDigit _ "8" = 8
+  ReadDigit _ "9" = 9
+  ReadDigit orig other =
+    TypeError ('Text "Parse error: "
+               ':<>: ShowType other
+               ':<>: 'Text " is not a valid in "
+               ':<>: ShowType orig)
 
 --------------------------------------------------------------------------------
 
