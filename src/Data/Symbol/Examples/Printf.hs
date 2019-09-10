@@ -14,6 +14,7 @@ module Data.Symbol.Examples.Printf where
 import Data.Symbol.Utils
 import GHC.TypeLits
 import Data.Proxy
+import Data.Monoid
 
 test :: String
 test = printf @"Wurble %d %d %s" 10 20 "foo"
@@ -31,7 +32,7 @@ instance FormatF '[] String where
 
 instance FormatF rest fun => FormatF (D ': rest) (Int -> fun) where
   formatF str i
-    = formatF @rest (str <> show i)
+    = formatF @rest (str Data.Monoid.<> show i)
 
 instance FormatF rest fun => FormatF (S ': rest) (String -> fun) where
   formatF str s

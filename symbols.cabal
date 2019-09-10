@@ -6,7 +6,7 @@ license:             BSD3
 license-file:        LICENSE
 author:              Csongor Kiss
 maintainer:          kiss.csongor.kiss@gmail.com
--- copyright:
+copyright:           (c) 2018-2019 Csongor Kiss
 category:            Dependent Types
 build-type:          Simple
 extra-source-files:  CHANGELOG.md
@@ -21,8 +21,8 @@ library
   exposed-modules:     Data.Symbol.Ascii
                      , Data.Symbol.Utils
                      , Data.Symbol.Examples.Printf
-  -- other-modules:
-  -- other-extensions:
-  build-depends:       base >=4.10 && <= 5.0
+  other-modules:       Data.Symbol.Ascii.Internal
+  build-depends:       base >=4.10 && <5
   hs-source-dirs:      src
+  ghc-options:         -Wall -Wno-unticked-promoted-constructors
   default-language:    Haskell2010
