@@ -1,5 +1,5 @@
 name:                symbols
-version:             0.2.0.3
+version:             0.3.0.0
 synopsis:            Symbol manipulation
 description:         Utilities for manipulating type-level strings natively.
 license:             BSD3
