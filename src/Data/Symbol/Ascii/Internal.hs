@@ -188,5 +188,196 @@ chars = buildTree [ chr c | c <- [0..0x7f] ] where
       []     -> error "panic! buildTree: r is empty"
       (c':_) -> [c']
 
-type Chars =
-    Node (Node (Node (Node (Node (Node (Node (Leaf "\NUL") "\SOH" (Leaf "\SOH")) "\STX" (Node (Leaf "\STX") "\ETX" (Leaf "\ETX"))) "\EOT" (Node (Node (Leaf "\EOT") "\ENQ" (Leaf "\ENQ")) "\ACK" (Node (Leaf "\ACK") "\a" (Leaf "\a")))) "\b" (Node (Node (Node (Leaf "\b") "\t" (Leaf "\t")) "\n" (Node (Leaf "\n") "\v" (Leaf "\v"))) "\f" (Node (Node (Leaf "\f") "\r" (Leaf "\r")) "\SO" (Node (Leaf "\SO") "\SI" (Leaf "\SI"))))) "\DLE" (Node (Node (Node (Node (Leaf "\DLE") "\DC1" (Leaf "\DC1")) "\DC2" (Node (Leaf "\DC2") "\DC3" (Leaf "\DC3"))) "\DC4" (Node (Node (Leaf "\DC4") "\NAK" (Leaf "\NAK")) "\SYN" (Node (Leaf "\SYN") "\ETB" (Leaf "\ETB")))) "\CAN" (Node (Node (Node (Leaf "\CAN") "\EM" (Leaf "\EM")) "\SUB" (Node (Leaf "\SUB") "\ESC" (Leaf "\ESC"))) "\FS" (Node (Node (Leaf "\FS") "\GS" (Leaf "\GS")) "\RS" (Node (Leaf "\RS") "\US" (Leaf "\US")))))) " " (Node (Node (Node (Node (Node (Leaf " ") "!" (Leaf "!")) "\"" (Node (Leaf "\"") "#" (Leaf "#"))) "$" (Node (Node (Leaf "$") "%" (Leaf "%")) "&" (Node (Leaf "&") "'" (Leaf "'")))) "(" (Node (Node (Node (Leaf "(") ")" (Leaf ")")) "*" (Node (Leaf "*") "+" (Leaf "+"))) "," (Node (Node (Leaf ",") "-" (Leaf "-")) "." (Node (Leaf ".") "/" (Leaf "/"))))) "0" (Node (Node (Node (Node (Leaf "0") "1" (Leaf "1")) "2" (Node (Leaf "2") "3" (Leaf "3"))) "4" (Node (Node (Leaf "4") "5" (Leaf "5")) "6" (Node (Leaf "6") "7" (Leaf "7")))) "8" (Node (Node (Node (Leaf "8") "9" (Leaf "9")) ":" (Node (Leaf ":") ";" (Leaf ";"))) "<" (Node (Node (Leaf "<") "=" (Leaf "=")) ">" (Node (Leaf ">") "?" (Leaf "?"))))))) "@" (Node (Node (Node (Node (Node (Node (Leaf "@") "A" (Leaf "A")) "B" (Node (Leaf "B") "C" (Leaf "C"))) "D" (Node (Node (Leaf "D") "E" (Leaf "E")) "F" (Node (Leaf "F") "G" (Leaf "G")))) "H" (Node (Node (Node (Leaf "H") "I" (Leaf "I")) "J" (Node (Leaf "J") "K" (Leaf "K"))) "L" (Node (Node (Leaf "L") "M" (Leaf "M")) "N" (Node (Leaf "N") "O" (Leaf "O"))))) "P" (Node (Node (Node (Node (Leaf "P") "Q" (Leaf "Q")) "R" (Node (Leaf "R") "S" (Leaf "S"))) "T" (Node (Node (Leaf "T") "U" (Leaf "U")) "V" (Node (Leaf "V") "W" (Leaf "W")))) "X" (Node (Node (Node (Leaf "X") "Y" (Leaf "Y")) "Z" (Node (Leaf "Z") "[" (Leaf "["))) "\\" (Node (Node (Leaf "\\") "]" (Leaf "]")) "^" (Node (Leaf "^") "_" (Leaf "_")))))) "`" (Node (Node (Node (Node (Node (Leaf "`") "a" (Leaf "a")) "b" (Node (Leaf "b") "c" (Leaf "c"))) "d" (Node (Node (Leaf "d") "e" (Leaf "e")) "f" (Node (Leaf "f") "g" (Leaf "g")))) "h" (Node (Node (Node (Leaf "h") "i" (Leaf "i")) "j" (Node (Leaf "j") "k" (Leaf "k"))) "l" (Node (Node (Leaf "l") "m" (Leaf "m")) "n" (Node (Leaf "n") "o" (Leaf "o"))))) "p" (Node (Node (Node (Node (Leaf "p") "q" (Leaf "q")) "r" (Node (Leaf "r") "s" (Leaf "s"))) "t" (Node (Node (Leaf "t") "u" (Leaf "u")) "v" (Node (Leaf "v") "w" (Leaf "w")))) "x" (Node (Node (Node (Leaf "x") "y" (Leaf "y")) "z" (Node (Leaf "z") "{" (Leaf "{"))) "|" (Node (Node (Leaf "|") "}" (Leaf "}")) "~" (Node (Leaf "~") "\DEL" (Leaf "\DEL")))))))
+-- To print this tree using pretty-show
+-- *Data.Symbol.Ascii.Internal Text.Show.Pretty Data.Maybe> valToDoc $ fromJust $ parseValue $ show chars
+--
+type Chars = Node
+  (Node
+     (Node
+        (Node
+           (Node
+              (Node
+                 (Node (Leaf "\NUL") "\SOH" (Leaf "\SOH"))
+                 "\STX"
+                 (Node (Leaf "\STX") "\ETX" (Leaf "\ETX")))
+              "\EOT"
+              (Node
+                 (Node (Leaf "\EOT") "\ENQ" (Leaf "\ENQ"))
+                 "\ACK"
+                 (Node (Leaf "\ACK") "\a" (Leaf "\a"))))
+           "\b"
+           (Node
+              (Node
+                 (Node (Leaf "\b") "\t" (Leaf "\t"))
+                 "\n"
+                 (Node (Leaf "\n") "\v" (Leaf "\v")))
+              "\f"
+              (Node
+                 (Node (Leaf "\f") "\r" (Leaf "\r"))
+                 "\SO"
+                 (Node (Leaf "\SO") "\SI" (Leaf "\SI")))))
+        "\DLE"
+        (Node
+           (Node
+              (Node
+                 (Node (Leaf "\DLE") "\DC1" (Leaf "\DC1"))
+                 "\DC2"
+                 (Node (Leaf "\DC2") "\DC3" (Leaf "\DC3")))
+              "\DC4"
+              (Node
+                 (Node (Leaf "\DC4") "\NAK" (Leaf "\NAK"))
+                 "\SYN"
+                 (Node (Leaf "\SYN") "\ETB" (Leaf "\ETB"))))
+           "\CAN"
+           (Node
+              (Node
+                 (Node (Leaf "\CAN") "\EM" (Leaf "\EM"))
+                 "\SUB"
+                 (Node (Leaf "\SUB") "\ESC" (Leaf "\ESC")))
+              "\FS"
+              (Node
+                 (Node (Leaf "\FS") "\GS" (Leaf "\GS"))
+                 "\RS"
+                 (Node (Leaf "\RS") "\US" (Leaf "\US"))))))
+     " "
+     (Node
+        (Node
+           (Node
+              (Node
+                 (Node (Leaf " ") "!" (Leaf "!"))
+                 "\""
+                 (Node (Leaf "\"") "#" (Leaf "#")))
+              "$"
+              (Node
+                 (Node (Leaf "$") "%" (Leaf "%"))
+                 "&"
+                 (Node (Leaf "&") "'" (Leaf "'"))))
+           "("
+           (Node
+              (Node
+                 (Node (Leaf "(") ")" (Leaf ")"))
+                 "*"
+                 (Node (Leaf "*") "+" (Leaf "+")))
+              ","
+              (Node
+                 (Node (Leaf ",") "-" (Leaf "-"))
+                 "."
+                 (Node (Leaf ".") "/" (Leaf "/")))))
+        "0"
+        (Node
+           (Node
+              (Node
+                 (Node (Leaf "0") "1" (Leaf "1"))
+                 "2"
+                 (Node (Leaf "2") "3" (Leaf "3")))
+              "4"
+              (Node
+                 (Node (Leaf "4") "5" (Leaf "5"))
+                 "6"
+                 (Node (Leaf "6") "7" (Leaf "7"))))
+           "8"
+           (Node
+              (Node
+                 (Node (Leaf "8") "9" (Leaf "9"))
+                 ":"
+                 (Node (Leaf ":") ";" (Leaf ";")))
+              "<"
+              (Node
+                 (Node (Leaf "<") "=" (Leaf "="))
+                 ">"
+                 (Node (Leaf ">") "?" (Leaf "?")))))))
+  "@"
+  (Node
+     (Node
+        (Node
+           (Node
+              (Node
+                 (Node (Leaf "@") "A" (Leaf "A"))
+                 "B"
+                 (Node (Leaf "B") "C" (Leaf "C")))
+              "D"
+              (Node
+                 (Node (Leaf "D") "E" (Leaf "E"))
+                 "F"
+                 (Node (Leaf "F") "G" (Leaf "G"))))
+           "H"
+           (Node
+              (Node
+                 (Node (Leaf "H") "I" (Leaf "I"))
+                 "J"
+                 (Node (Leaf "J") "K" (Leaf "K")))
+              "L"
+              (Node
+                 (Node (Leaf "L") "M" (Leaf "M"))
+                 "N"
+                 (Node (Leaf "N") "O" (Leaf "O")))))
+        "P"
+        (Node
+           (Node
+              (Node
+                 (Node (Leaf "P") "Q" (Leaf "Q"))
+                 "R"
+                 (Node (Leaf "R") "S" (Leaf "S")))
+              "T"
+              (Node
+                 (Node (Leaf "T") "U" (Leaf "U"))
+                 "V"
+                 (Node (Leaf "V") "W" (Leaf "W"))))
+           "X"
+           (Node
+              (Node
+                 (Node (Leaf "X") "Y" (Leaf "Y"))
+                 "Z"
+                 (Node (Leaf "Z") "[" (Leaf "[")))
+              "\\"
+              (Node
+                 (Node (Leaf "\\") "]" (Leaf "]"))
+                 "^"
+                 (Node (Leaf "^") "_" (Leaf "_"))))))
+     "`"
+     (Node
+        (Node
+           (Node
+              (Node
+                 (Node (Leaf "`") "a" (Leaf "a"))
+                 "b"
+                 (Node (Leaf "b") "c" (Leaf "c")))
+              "d"
+              (Node
+                 (Node (Leaf "d") "e" (Leaf "e"))
+                 "f"
+                 (Node (Leaf "f") "g" (Leaf "g"))))
+           "h"
+           (Node
+              (Node
+                 (Node (Leaf "h") "i" (Leaf "i"))
+                 "j"
+                 (Node (Leaf "j") "k" (Leaf "k")))
+              "l"
+              (Node
+                 (Node (Leaf "l") "m" (Leaf "m"))
+                 "n"
+                 (Node (Leaf "n") "o" (Leaf "o")))))
+        "p"
+        (Node
+           (Node
+              (Node
+                 (Node (Leaf "p") "q" (Leaf "q"))
+                 "r"
+                 (Node (Leaf "r") "s" (Leaf "s")))
+              "t"
+              (Node
+                 (Node (Leaf "t") "u" (Leaf "u"))
+                 "v"
+                 (Node (Leaf "v") "w" (Leaf "w"))))
+           "x"
+           (Node
+              (Node
+                 (Node (Leaf "x") "y" (Leaf "y"))
+                 "z"
+                 (Node (Leaf "z") "{" (Leaf "{")))
+              "|"
+              (Node
+                 (Node (Leaf "|") "}" (Leaf "}"))
+                 "~"
+                 (Node (Leaf "~") "\DEL" (Leaf "\DEL")))))))
