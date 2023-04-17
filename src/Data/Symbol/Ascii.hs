@@ -14,13 +14,14 @@ module Data.Symbol.Ascii
   (
     Head
   , ToList
+  , FromList
   , ToUpper
   , ToLower
   , ReadNat
   ) where
 
 import GHC.TypeLits
-import Data.Symbol.Ascii.Internal (Head, ToList)
+import Data.Symbol.Ascii.Internal (Head, ToList, FromList)
 
 --------------------------------------------------------------------------------
 

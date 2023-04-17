@@ -1,5 +1,5 @@
 name:                symbols
-version:             0.3.0.0
+version:             0.3.1.0
 synopsis:            Symbol manipulation
 description:         Utilities for manipulating type-level strings natively.
 license:             BSD3
@@ -21,7 +21,7 @@ library
   exposed-modules:     Data.Symbol.Ascii
                      , Data.Symbol.Utils
                      , Data.Symbol.Examples.Printf
-  other-modules:       Data.Symbol.Ascii.Internal
+                     , Data.Symbol.Ascii.Internal
   build-depends:       base >=4.10 && <5
   hs-source-dirs:      src
   ghc-options:         -Wall -Wno-unticked-promoted-constructors
