@@ -4,9 +4,11 @@
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE TypeOperators #-}
 {-# LANGUAGE UndecidableInstances #-}
+{-# LANGUAGE PolyKinds #-}
+
 module Data.Symbol.Ascii.Internal where
 
-import Prelude hiding (head, lookup)
+import Prelude hiding (head, lookup, (<>))
 
 import Data.Char (chr)
 import GHC.TypeLits (CmpSymbol, Symbol, AppendSymbol, ErrorMessage (..), TypeError)
@@ -155,6 +157,54 @@ type family ToList1 (x :: Symbol) (pfx :: Symbol) :: [Symbol] where
 type family ToList2 (x :: Symbol) (pfx :: Symbol) (o :: Ordering) :: [Symbol] where
   ToList2 x pfx 'LT = Lookup x pfx Chars ': ToList1 x (AppendSymbol pfx (Lookup x pfx Chars))
   ToList2 x _   _   = TypeError ('Text "Non-AScII character in " ':<>: ShowType x)
+
+-------------------------------------------------------------------------------
+
+-- | Convert the list of 'Symbol's into a 'Symbol'
+--
+-- >>> :kind! FromList ["A", "B", "C"]
+-- FromList ["A", "B", "C"] :: Symbol
+-- = "ABC"
+--
+-- 'FromList' works only for ASCII strings
+--
+-- >>> :kind! FromList ["1", "2", "3", "±", "4", "5", "6"]
+-- FromList ["1", "2", "3", "±", "4", "5", "6"] :: Symbol
+-- = FromList2
+--     ('["1"]
+--      ++ ('["2"] ++ ('["3"] ++ ((TypeError ...) ++ '["4", "5", "6"]))))
+--
+-- >>> :kind! FromList ["1", "2"]
+-- FromList ["1", "2"] :: Symbol
+-- = "12"
+type family FromList (syms :: [Symbol]) :: Symbol where
+  FromList xs = FromList2 (FromList1 xs '[])
+
+-- | Concatenate type-level lists
+-- 
+-- >>> :kind! ('["hello, "] ++ '["world!"])
+-- ('["hello, "] ++ '["world!"]) :: [Symbol]
+-- = '["hello, ", "world!"]
+type family (++) (as :: [k]) (bs :: [k]) :: [k] where
+  (++) a '[] = a
+  (++) '[] b = b
+  (++) (a ': as) bs = a ': (as ++ bs)
+
+-- | Split each 'Symbol' into a list of characters and concatenate these lists
+-- 
+-- 'ToList' checks if each 'Symbol' is ASCII-only
+type family FromList1 (syms :: [Symbol]) (res :: [Symbol]) :: [Symbol] where
+  FromList1 '[] res    = res
+  FromList1 (x:xs) res =  ToList x ++ FromList1 xs res
+
+-- | Convert the list of 'Symbol's into a 'Symbol'
+-- 
+-- Works for any 'Symbol's
+type family FromList2 (syms :: [Symbol]) :: Symbol where
+  FromList2 '[]      = ""
+  FromList2 (x : xs) = AppendSymbol x (FromList2 xs)
+
+-------------------------------------------------------------------------------
 
 type family Lookup (x :: Symbol) (pfx :: Symbol) (xs :: Tree Symbol) :: Symbol where
   Lookup "" _   _             = ""
